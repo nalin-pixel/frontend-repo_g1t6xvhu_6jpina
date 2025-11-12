@@ -1,26 +1,63 @@
-import { useState } from 'react'
+import { useRef, useState, useEffect } from 'react'
+import { motion, AnimatePresence } from 'framer-motion'
+import Hero from './components/Hero'
+import Manifesto from './components/Manifesto'
+import Works from './components/Works'
+import Tech from './components/Tech'
+import Contact from './components/Contact'
+import Cursor from './components/Cursor'
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [entered, setEntered] = useState(false)
+  const scroller = useRef(null)
+
+  useEffect(() => {
+    if (entered) {
+      // enable scroll when entering
+      document.body.classList.remove('overflow-hidden')
+      // smooth scroll
+      if ('scrollBehavior' in document.documentElement.style) {
+        document.documentElement.style.scrollBehavior = 'smooth'
+      }
+    }
+  }, [entered])
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-50 to-blue-50 flex items-center justify-center">
-      <div className="bg-white p-8 rounded-lg shadow-lg">
-        <h1 className="text-3xl font-bold text-gray-800 mb-4">
-          Vibe Coding Platform
-        </h1>
-        <p className="text-gray-600 mb-6">
-          Your AI-powered development environment
-        </p>
-        <div className="text-center">
-          <button
-            onClick={() => setCount(count + 1)}
-            className="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded"
-          >
-            Count is {count}
-          </button>
-        </div>
-      </div>
+    <div ref={scroller} className="relative min-h-screen bg-black text-white">
+      <Cursor />
+      <AnimatePresence mode="wait">
+        {!entered ? (
+          <motion.div key="hero" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.8 }}>
+            <Hero onEnter={() => setEntered(true)} />
+          </motion.div>
+        ) : (
+          <motion.main key="main" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.8 }}>
+            {/* top nav */}
+            <header className="fixed top-0 left-0 right-0 z-30 mx-auto flex max-w-6xl items-center justify-between px-6 py-5">
+              <a href="#hero" className="rounded-full border border-white/20 bg-white/10 px-4 py-1 text-sm backdrop-blur-md" data-cursor>ECLYPSE</a>
+              <nav className="hidden gap-6 sm:flex">
+                {[
+                  ['About', '#about'],
+                  ['Works', '#works'],
+                  ['Tech', '#tech'],
+                  ['Contact', '#contact'],
+                ].map(([l, href]) => (
+                  <a key={href} href={href} className="text-white/70 hover:text-white" data-cursor>
+                    {l}
+                  </a>
+                ))}
+              </nav>
+            </header>
+
+            {/* sections */}
+            <Hero onEnter={() => window.scrollTo({ top: window.innerHeight, behavior: 'smooth' })} />
+            <Manifesto />
+            <Works />
+            <Tech />
+            <Contact />
+          </motion.main>
+        )}
+      </AnimatePresence>
     </div>
   )
 }
