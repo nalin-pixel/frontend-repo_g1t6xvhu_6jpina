@@ -29,7 +29,7 @@ export default function Manifesto() {
           'radial-gradient(60% 80% at 80% 20%, rgba(138,43,226,0.10), transparent 60%), radial-gradient(40% 60% at 20% 80%, rgba(0,255,255,0.08), transparent 60%), #0b0b0b',
       }}
     >
-      <div className="pointer-events-none absolute inset-0 bg-[url('data:image/svg+xml;utf8,<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"160\" height=\"160\" viewBox=\"0 0 40 40\"><path d=\"M0 39.5 H40\" stroke=\"%23111111\" stroke-width=\"0.5\"/><path d=\"M0.5 0 V40\" stroke=\"%23111111\" stroke-width=\"0.5\"/></svg>')] opacity-40" />
+      <div className="pointer-events-none absolute inset-0 bg-[url('data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%22160%22 height=%22160%22 viewBox=%220 0 40 40%22><path d=%22M0 39.5 H40%22 stroke=%22%23111111%22 stroke-width=%220.5%22/><path d=%22M0.5 0 V40%22 stroke=%22%23111111%22 stroke-width=%220.5%22/></svg>')] opacity-40" />
 
       <motion.div
         initial={{ opacity: 0, x: -30 }}
